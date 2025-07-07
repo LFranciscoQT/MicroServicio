@@ -7,10 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.Francisco.libros.escritoresDTO.EscritoresDto;
+import com.Francisco.libros.escritoresDTO.EscritoresFeingApi;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 
 public class LibrosService 
 {
+
+    //@Autowired
+
+    //cosumir la clase que se conecta a Escritores
+    @Autowired
+    private EscritoresFeingApi escritoresFeingApi;
 
     @Autowired
     private LibrosRepository librosRepository;
@@ -87,5 +99,11 @@ public class LibrosService
         {
             return ResponseEntity.status(HttpStatus.SC_INTERNAL_SERVER_ERROR).build();
         }
+    }
+    
+    //Metodo para obtener los escritores desde el microservicio
+    public EscritoresDto obternerEscritorById(Long id)
+    {
+        return escritoresFeingApi.getEscritoreById(id);
     }
 }

@@ -13,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Francisco.libros.escritoresDTO.EscritoresDto;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping(value = "/API")
+@RequiredArgsConstructor
 
 public class LibrosController 
 {
 
    @Autowired
-   private LibrosService librosService;
+   private final LibrosService librosService;
    
    //Metodo Guardar
    @PostMapping(value = "/libro")
@@ -55,5 +60,12 @@ public class LibrosController
    public ResponseEntity<Libros> actualizarLibros(@PathVariable("id") Long id, @RequestBody Libros entity)
    {
       return librosService.actualizarLibros(id, entity);
+   }
+
+   //Controlar Escritores por Id desde Aqui
+   @GetMapping("/consultar/escritor/{id}")
+   public EscritoresDto obtenerEscritorMicro(@PathVariable("id") Long id)
+   {
+      return librosService.obternerEscritorById(id);
    }
 }
